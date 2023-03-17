@@ -7,9 +7,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 import java.awt.*;
+import java.util.Vector;
 
 public class Drop extends ApplicationAdapter {
 
@@ -54,6 +56,13 @@ public class Drop extends ApplicationAdapter {
 		batch.begin();
 		batch.draw(bucketImage, bucket.x, bucket.y);
 		batch.end();
+
+		if(Gdx.input.isTouched()){
+			Vector3 touchPos = new Vector3();
+			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+			camera.unproject(touchPos);
+			bucket.x = (int) (touchPos.x - GUIParams.ENTITY_SIZE / 2);
+		}
 	}
 	
 	@Override
