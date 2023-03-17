@@ -8,8 +8,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import java.awt.*;
 import java.util.Vector;
@@ -23,6 +26,8 @@ public class Drop extends ApplicationAdapter {
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
 	private Rectangle bucket;
+	private Array<Rectangle> raindrops;
+	private long lastDropTime;
 
 	@Override
 	public void create () {
@@ -45,6 +50,9 @@ public class Drop extends ApplicationAdapter {
 		bucket.y = 20;
 		bucket.width = GUIParams.ENTITY_SIZE;
 		bucket.height = GUIParams.ENTITY_SIZE;
+
+		raindrops = new Array<>();
+		spawnRaindrop();
 	}
 
 	@Override
@@ -56,6 +64,9 @@ public class Drop extends ApplicationAdapter {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		batch.draw(bucketImage, bucket.x, bucket.y);
+		for(Rectangle raindrop : raindrops){
+			batch.draw(dropImage, raindrop.x, raindrop.y);
+		}
 		batch.end();
 
 		if(Gdx.input.isTouched()){
@@ -78,8 +89,28 @@ public class Drop extends ApplicationAdapter {
 		if(bucket.x > GUIParams.WIDTH - GUIParams.ENTITY_SIZE){
 			bucket.x = GUIParams.WIDTH - GUIParams.ENTITY_SIZE;
 		}
+
+		if(TimeUtils.nanoTime() - lastDropTime > 1_000_000_000){
+			spawnRaindrop();
+		}
+
+		for(Rectangle raindrop : raindrops){
+			raindrop.y -=200 * Gdx.graphics.getDeltaTime();
+
+		}
+
 	}
-	
+
+	private void spawnRaindrop(){
+		Rectangle raindrop = new Rectangle();
+		raindrop.x = MathUtils.random(0, GUIParams.WIDTH - GUIParams.ENTITY_SIZE);
+		raindrop.y = GUIParams.HEIGHT;
+		raindrop.width = GUIParams.ENTITY_SIZE;
+		raindrop.height = GUIParams.ENTITY_SIZE;
+		raindrops.add(raindrop);
+		lastDropTime = TimeUtils.nanoTime();
+	}
+
 	@Override
 	public void dispose () {
 
