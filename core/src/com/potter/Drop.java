@@ -2,6 +2,7 @@ package com.potter;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -62,6 +63,20 @@ public class Drop extends ApplicationAdapter {
 			touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
 			camera.unproject(touchPos);
 			bucket.x = (int) (touchPos.x - GUIParams.ENTITY_SIZE / 2);
+		}
+
+		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+			bucket.x -= 200 * Gdx.graphics.getDeltaTime();
+		}
+		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+			bucket.x += 200 * Gdx.graphics.getDeltaTime();
+		}
+
+		if(bucket.x < 0){
+			bucket.x = 0;
+		}
+		if(bucket.x > GUIParams.WIDTH - GUIParams.ENTITY_SIZE){
+			bucket.x = GUIParams.WIDTH - GUIParams.ENTITY_SIZE;
 		}
 	}
 	
