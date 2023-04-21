@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
-
-import java.awt.*;
+import java.util.Iterator;
 import java.util.Vector;
 
 public class Drop extends ApplicationAdapter {
@@ -94,9 +94,17 @@ public class Drop extends ApplicationAdapter {
 			spawnRaindrop();
 		}
 
-		for(Rectangle raindrop : raindrops){
+		for(Iterator<Rectangle> iter = raindrops.iterator(); iter.hasNext(); ){
+			Rectangle raindrop = iter.next();
 			raindrop.y -=200 * Gdx.graphics.getDeltaTime();
+			if (raindrop.y + GUIParams.ENTITY_SIZE < 0) {
+				iter.remove();
 
+			}
+			if(raindrop.overlaps(bucket)){
+				dropSound.play();
+				iter.remove();
+			}
 		}
 
 	}
@@ -113,6 +121,10 @@ public class Drop extends ApplicationAdapter {
 
 	@Override
 	public void dispose () {
-
+		dropImage.dispose();
+		bucketImage.dispose();
+		dropSound.dispose();
+		rainMusic.dispose();
+		batch.dispose();
 	}
 }
