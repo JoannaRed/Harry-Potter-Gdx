@@ -34,6 +34,9 @@ public class GameplayScreen implements Screen {
             hg.addCard(cardActor);
         }
         stage.addActor(hg);
+         CounterActor counterActor = new CounterActor();
+         stage.addActor(counterActor);
+
     }
 
     @Override

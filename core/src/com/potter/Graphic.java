@@ -5,5 +5,7 @@ public class Graphic {
     public static final int SCREEN_WIDTH = 1093 ;
     public static final int CARD_HEIGHT = 150;
     public static final int CARD_WIDTH = 115 ;
+    public static final int ICON_HEIGHT = 50;
+    public static final int ICON_WIDTH = 50 ;
 
 }
