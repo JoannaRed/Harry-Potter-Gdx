@@ -19,7 +19,6 @@ public class GameplayScreen implements Screen {
     private SpriteBatch batch;
 
 
-
     public GameplayScreen(HarryPotter harryPotter) {
         this.harryPotter = harryPotter;
         batch = harryPotter.getSpriteBatch();
@@ -28,8 +27,13 @@ public class GameplayScreen implements Screen {
         camera.setToOrtho(false, Graphic.SCREEN_WIDTH, Graphic.SCREEN_HEIGHT );
         Gdx.input.setInputProcessor(stage);
         backgroundTexture = new Texture(Gdx.files.internal("boardMini.jpg"));
-        CardActor cardActor = new CardActor();
-        stage.addActor(cardActor);
+        HandGroup hg = new HandGroup();
+        hg.setPosition(250,0);
+        for (int i = 0; i < 5; i++) {
+            CardActor cardActor = new CardActor();
+            hg.addCard(cardActor);
+        }
+        stage.addActor(hg);
     }
 
     @Override
@@ -43,7 +47,7 @@ public class GameplayScreen implements Screen {
         batch.setProjectionMatrix(camera.combined);
         camera.update();
         batch.begin();
-        batch.draw(backgroundTexture,0,0, Graphic.SCREEN_WIDTH, Graphic.SCREEN_HEIGHT);
+        batch.draw(backgroundTexture,0,150, Graphic.SCREEN_WIDTH, (Graphic.SCREEN_HEIGHT)-150);
         batch.end();
         stage.act(delta);
         stage.draw();

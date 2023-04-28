@@ -9,12 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import org.w3c.dom.Text;
 
+import static com.potter.Graphic.CARD_HEIGHT;
+import static com.potter.Graphic.CARD_WIDTH;
+
 public class CardActor extends Actor {
     private Texture texture;
 
     public CardActor() {
         this.texture = new Texture(Gdx.files.internal("card.png"));
-        setBounds(0,0, 115, 150);
+        setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
         addListener(new DragCardListener());
 
     }
