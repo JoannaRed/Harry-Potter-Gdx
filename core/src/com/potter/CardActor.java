@@ -4,22 +4,23 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import org.w3c.dom.Text;
 
-import static com.potter.Graphic.CARD_HEIGHT;
-import static com.potter.Graphic.CARD_WIDTH;
+import static com.potter.Graphic.*;
 
 public class CardActor extends Actor {
     private Texture texture;
+    private DragCardListener dcl = new DragCardListener();
 
     public CardActor() {
         this.texture = new Texture(Gdx.files.internal("card.png"));
         setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
-        addListener(new DragCardListener());
-
+        addListener(dcl);
     }
 
     @Override
@@ -39,6 +40,7 @@ public class CardActor extends Actor {
         private float deltaY;
 
 
+
         @Override
         public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
             deltaX = x;
@@ -51,6 +53,18 @@ public class CardActor extends Actor {
             float newX = getX() + x - deltaX;
             float newY = getY() + y - deltaY;
             setPosition(newX, newY);
+
+
+        }
+
+        @Override
+        public void dragStop(InputEvent event, float x, float y, int pointer) {
+            if(getY()>= SCREEN_HEIGHT/4){
+                removeListener(dcl);
+                // znikanie karty
+                addAction(Actions.fadeOut(1));
+            }
+            super.dragStop(event, x, y, pointer);
         }
     }
 
