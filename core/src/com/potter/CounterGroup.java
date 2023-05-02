@@ -10,3 +10,9 @@ public class CounterGroup extends Group {
         addActor(counterActor);
     }
 }
+
+
+// przeniesienie plynnie aktora z jednej do drugiej grupy
+// po drodze zmienic wartosc boolean
+// ponowanie wykorzystac deckGroup do kart zagranych
+// jak zagramy wszystkie karty i DeckGroup lewy jest pusty to wtasowujemy wszyskirgo z prawego do lewego

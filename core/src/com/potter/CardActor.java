@@ -5,22 +5,24 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
-import org.w3c.dom.Text;
 
 import static com.potter.Graphic.*;
 
 public class CardActor extends Actor {
-    private Texture texture;
+    private Texture faceUpTexture;
+    private Texture faceDownTexture;
     private DragCardListener dcl = new DragCardListener();
+    private boolean faceUp = false;
 
     public CardActor() {
-        this.texture = new Texture(Gdx.files.internal("card.png"));
+        this.faceUpTexture = new Texture(Gdx.files.internal("card.png"));
+        this.faceDownTexture = new Texture(Gdx.files.internal("card_back.png"));
         setBounds(0,0, CARD_WIDTH, CARD_HEIGHT);
+
         addListener(dcl);
     }
 
@@ -28,9 +30,16 @@ public class CardActor extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         Color color = getColor();
         batch.setColor(color.r, color.g, color.b, color.a * parentAlpha);
-        batch.draw(texture, getX(), getY(), getOriginX(), getOriginY(),
+        // ustawianie tekstury aktywnej karty
+        Texture activeTexture;
+        if(faceUp){
+            activeTexture = faceUpTexture;
+        }else {
+            activeTexture = faceDownTexture;
+        }
+        batch.draw(activeTexture, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(),
-                getRotation(), 0, 0, texture.getWidth(), texture.getHeight(),
+                getRotation(), 0, 0, activeTexture.getWidth(), activeTexture.getHeight(),
                 false, false);
         batch.setColor(Color.WHITE);
 

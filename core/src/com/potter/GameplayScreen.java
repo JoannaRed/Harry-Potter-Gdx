@@ -27,14 +27,19 @@ public class GameplayScreen implements Screen {
         camera.setToOrtho(false, Graphic.SCREEN_WIDTH, Graphic.SCREEN_HEIGHT );
         Gdx.input.setInputProcessor(stage);
         backgroundTexture = new Texture(Gdx.files.internal("boardMini.jpg"));
-        HandGroup hg = new HandGroup();
-        hg.setPosition(250,0);
+        DeckGroup dg = new DeckGroup();
+        dg.setPosition(100 , 0);
         for (int i = 0; i < 5; i++) {
             CardActor cardActor = new CardActor();
-            hg.addCard(cardActor);
+            dg.addCard(cardActor);
         }
-        stage.addActor(hg);
 
+        HandGroup hg = new HandGroup();
+
+        hg.setPosition(250,0);
+
+        stage.addActor(hg);
+        stage.addActor(dg);
         CounterGroup counterGroup = new CounterGroup();
 
         CounterActor counterActor = new CounterActor("heart.png", harryPotter.getBitmapFont() );
