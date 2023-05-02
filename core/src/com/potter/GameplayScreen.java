@@ -34,8 +34,18 @@ public class GameplayScreen implements Screen {
             hg.addCard(cardActor);
         }
         stage.addActor(hg);
-         CounterActor counterActor = new CounterActor();
-         stage.addActor(counterActor);
+
+        CounterGroup counterGroup = new CounterGroup();
+
+        CounterActor counterActor = new CounterActor("heart.png", harryPotter.getBitmapFont() );
+        CounterActor counterActor2 = new CounterActor("coin.jpg",harryPotter.getBitmapFont() );
+        CounterActor counterActor3 = new CounterActor("lightning.png", harryPotter.getBitmapFont());
+
+        counterGroup.addCounter(counterActor);
+        counterGroup.addCounter(counterActor2);
+        counterGroup.addCounter(counterActor3);
+
+        stage.addActor(counterGroup);
 
     }
 
