@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -62,7 +63,10 @@ public class CardActor extends Actor {
             if(getY()>= SCREEN_HEIGHT/4){
                 removeListener(dcl);
                 // znikanie karty
-                addAction(Actions.fadeOut(1));
+                //addAction(Actions.fadeOut(1));
+
+                //przesylanie zagranych kart do rogu
+                addAction(Actions.moveTo(SCREEN_WIDTH*0.6f , 0, 0.5f, Interpolation.circleIn));
             }
             super.dragStop(event, x, y, pointer);
         }
